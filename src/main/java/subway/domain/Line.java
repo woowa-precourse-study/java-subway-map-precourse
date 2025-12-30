@@ -1,15 +1,28 @@
 package subway.domain;
 
-public class Line {
-    private String name;
+import java.util.Objects;
+import subway.constant.ErrorMessage;
 
-    public Line(String name) {
-        this.name = name;
+public record Line(String name) {
+
+    public static Line from(String name) {
+        validate(name);
+        return new Line(name);
     }
 
-    public String getName() {
-        return name;
+    private static void validate(String name) {
+        if (name.length() < 2) {
+            throw new IllegalArgumentException(ErrorMessage.LINE_NAME_SIZE_ERROR.getErrorMessage());
+        }
     }
 
-    // 추가 기능 구현
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Line line = (Line) object;
+        return Objects.equals(name, line.name);
+    }
+
 }
