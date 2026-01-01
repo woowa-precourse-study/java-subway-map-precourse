@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class OutputView {
     public static void printStationInfo(List<Station> stations) {
-        System.out.println("##  목록");
+        System.out.println("## 역 목록");
         for (Station station : stations) {
             System.out.println("[INFO] " + station.getName());
         }
@@ -29,6 +29,10 @@ public class OutputView {
 
     public static void printSectionResult() {
         System.out.println("[INFO] 구간이 등록되었습니다.");
+    }
+
+    public static void printSectionDelete() {
+        System.out.println("[INFO] 구간이 삭제되었습니다.");
     }
 
 

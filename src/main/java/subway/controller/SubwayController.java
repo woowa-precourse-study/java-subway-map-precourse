@@ -151,6 +151,24 @@ public class SubwayController {
 
         if (choice.equals("2")) {
 
+            String line=inputView.readSectionDeleteLine();
+            if (!sections.containsKey(line)){
+                throw new IllegalArgumentException("[ERROR] 해당 노선이 존재하지 않습니다.");
+            }
+
+            String station=inputView.readSectionDeleteStation();
+            StationRepository.validateStation(station);
+
+
+            if (sections.get(line).size()<=2){
+                throw new IllegalArgumentException("[ERROR] 노선에 포함된 역이 두개 이하일 때는 역을 제거할 수 없습니다.");
+            }
+
+            List<String> newSection2 = new ArrayList<>(); // TODO 이거 정리
+            newSection2.addAll(sections.get(line));
+            int idx=newSection2.indexOf(station);
+            newSection2.remove(idx);
+            OutputView.printSectionDelete();
 
         }
 

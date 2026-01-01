@@ -139,6 +139,22 @@ public class InputView {
         return Validator.validateIsNumber(input);
     }
 
+    public String readSectionDeleteLine(){
+        System.out.println("## 삭제할 구간의 노선을 입력하세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+        return input;
+    }
+
+    public String readSectionDeleteStation(){
+        System.out.println("## 삭제할 구간의 역을 입력하세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+        return input;
+    }
+
 
 
 
