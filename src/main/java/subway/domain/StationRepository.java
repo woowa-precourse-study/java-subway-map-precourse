@@ -26,6 +26,17 @@ public class StationRepository {
         return stations;
     }
 
+    public static boolean isExistStation(String name) {
+        for (Station station : stations) {
+            if (station.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
     private static void validateUniqueStation(Station station) {
         if (stations.contains(station)) {
             throw new IllegalArgumentException("[ERROR] 이미 존재하는 역은 등록할 수 없습니다.");

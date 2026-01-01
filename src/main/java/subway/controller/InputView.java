@@ -42,6 +42,8 @@ public class InputView {
         return input;
     }
 
+
+
     public String readLineFunction() {
         System.out.println("""
                 ## 노선 관리 화면
@@ -54,6 +56,21 @@ public class InputView {
         String input = readInput(List.of(
                 Validator::validateNotBlank,
                 Validator::validateChoice
+        ));
+        return input;
+    }
+
+    public String readSectionFunction() {
+        System.out.println("""
+                \n## 구간 관리 화면
+                1. 구간 등록
+                2. 구간 삭제
+                B. 돌아가기
+                """);
+        System.out.println("\n## 원하는 기능을 선택하세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank,
+                Validator::validateSectionChoice
         ));
         return input;
     }
@@ -105,6 +122,24 @@ public class InputView {
         ));
         return end;
     }
+
+    public String readSectionAddStation(){
+        System.out.println("## 역이름을 입력하세요.");
+        String end = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+        return end;
+    }
+
+    public int readOrder(){
+        System.out.println("## 순서를 입력하세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+        return Validator.validateIsNumber(input);
+    }
+
+
 
 
 

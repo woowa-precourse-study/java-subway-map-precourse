@@ -1,6 +1,5 @@
 package subway.exception;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public interface Validator {
@@ -9,7 +8,7 @@ public interface Validator {
 
     static void validateNotBlank(String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException("빈 값은 입력할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 빈 값은 입력할 수 없습니다.");
         }
     }
 
@@ -25,6 +24,19 @@ public interface Validator {
         }
     }
 
+    static void validateSectionChoice(String input) {
+        if (!Set.of("1", "2", "B").contains(input)) {
+            throw new IllegalArgumentException("[ERROR] 선택할 수 없는 기능입니다.");
+        }
+    }
+
+    static int validateIsNumber(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 순서는 숫자여야합니다.");
+        }
+    }
 
 
 }

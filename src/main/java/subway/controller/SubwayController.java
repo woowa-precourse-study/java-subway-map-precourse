@@ -12,13 +12,14 @@ import subway.domain.Station;
 import subway.domain.StationRepository;
 import subway.service.SubwayService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SubwayController {
     private Map<String, Command> commands = new HashMap<>();
-    Map<String, List<String>> sections = new HashMap<>();
+    private Map<String, List<String>> sections = new HashMap<>();
     private final InputView inputView;
     private final SubwayService service;
 
@@ -127,8 +128,34 @@ public class SubwayController {
     }
 
     public void sectionManagement() {
+        String choice = inputView.readSectionFunction();
+        if (choice.equals("B")) {
+            return;
+        }
+        if (choice.equals("1")) {
+            String line = inputView.readAddLine();
+            if (!sections.containsKey(line)){
+                throw new IllegalArgumentException("[ERROR] 해당 노선이 존재하지 않습니다.");
+            }
+            String station = inputView.readSectionAddStation();
+            if (!StationRepository.isExistStation(station)){
+                StationRepository.addStation(new Station(station));
+            }
+            int order = inputView.readOrder();
+            List<String> newSection = new ArrayList<>(); // TODO 이거 정리
+            newSection.addAll(sections.get(line));
+            newSection.add(order,station);
+            OutputView.printSectionResult();
+
+        }
+
+        if (choice.equals("2")) {
+
+
+        }
 
     }
+
 
 
 
