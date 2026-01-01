@@ -133,6 +133,7 @@ public class SubwayController {
 
 
     public void printRoute() {
+        OutputView.printRoute(sections);
     }
 
     public void quit() {

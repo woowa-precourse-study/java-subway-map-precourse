@@ -4,6 +4,7 @@ import subway.domain.Line;
 import subway.domain.Station;
 
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     public static void printStationInfo(List<Station> stations) {
@@ -24,6 +25,19 @@ public class OutputView {
 
     public static void printAddLineResult() {
         System.out.println("[INFO] 지하철 노선이 등록되었습니다.");
+    }
+
+    public static void printRoute(Map<String, List<String>> sections) {
+        System.out.println("## 지하철 노선도");
+
+        for (String line : sections.keySet()) {
+            System.out.println("[INFO] " + line);
+            System.out.println("[INFO] ---");
+            for (String station:sections.get(line)){
+                System.out.println("[INFO] " + station);
+            }
+            System.out.println();
+        }
     }
 
 
