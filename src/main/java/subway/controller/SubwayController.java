@@ -13,10 +13,12 @@ import subway.domain.StationRepository;
 import subway.service.SubwayService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SubwayController {
     private Map<String, Command> commands = new HashMap<>();
+    Map<String, List<String>> sections = new HashMap<>();
     private final InputView inputView;
     private final SubwayService service;
 
@@ -60,6 +62,11 @@ public class SubwayController {
         LineRepository.addLine(new Line("신분당선"));
 
 
+        sections.put("2호선",List.of("교대역","강남역","역삼역"));
+        sections.put("3호선",List.of("교대역","남부터미널역","양재역","매봉역"));
+        sections.put("신분당선",List.of("강남역","양재역","양재시민의숲역"));
+
+
     }
 
 
@@ -70,6 +77,7 @@ public class SubwayController {
         }
         if (choice.equals("1")) {
             StationRepository.addStation(new Station(inputView.readAddStation()));
+
         }
 
         if (choice.equals("2")) {
@@ -77,16 +85,46 @@ public class SubwayController {
         }
 
         if (choice.equals("3")) {
-            OutputView.printStation(StationRepository.getStationInfo());
+            OutputView.printStationInfo(StationRepository.getStationInfo());
         }
 
     }
 
-    public void sectionManagement() {
+    public void lineMangement() {
+        String choice = inputView.readLineFunction();
+        if (choice.equals("B")) {
+            return;
+        }
+        if (choice.equals("1")) {
+            String line = inputView.readAddLine();
+            if (sections.containsKey(line)){
+                throw new IllegalArgumentException("[ERROR] 이미 등록된 노선입니다.");
+            }
+            String start = inputView.readStartStation();
+            StationRepository.validateStation(start);
+            String end = inputView.readEndStation();
+            StationRepository.validateStation(end);
+
+            LineRepository.addLine(new Line(line));
+            sections.put(line,List.of(start,end));
+            OutputView.printAddLineResult();
+
+        }
+
+        if (choice.equals("2")) {
+            LineRepository.deleteLineByName(inputView.readDeleteLine());
+        }
+
+        if (choice.equals("3")) {
+            OutputView.printLineInfo(LineRepository.getLinesInfo());
+        }
     }
 
-    public void lineMangement() {
+    public void sectionManagement() {
+
     }
+
+
 
     public void printRoute() {
     }

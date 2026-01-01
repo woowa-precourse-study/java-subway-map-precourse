@@ -32,12 +32,12 @@ public class StationRepository {
         }
     }
 
-    private static void validateStation(String name) {
+    public static void validateStation(String name) {
         for (Station station : stations) {
             if (station.getName().equals(name)) {
                 return;
             }
         }
-        throw new IllegalArgumentException("[ERROR] 존재하지 않는 역은 삭제할 수 없습니다.");
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 역입니다.");
     }
 }
