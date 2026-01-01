@@ -14,13 +14,13 @@ public interface Validator {
     }
 
     static void validateFunction(String input) {
-        if (!Set.of("1","2","3","4","Q").contains(input)) {
+        if (!Set.of("1", "2", "3", "4", "Q").contains(input)) {
             throw new IllegalArgumentException("입력이 올바르지 않습니다.");
         }
     }
 
     static void validateChoice(String input) {
-        if (Set.of("1","2","3","B").contains(input)) {
+        if (!Set.of("1", "2", "3", "B").contains(input)) {
             throw new IllegalArgumentException("입력이 올바르지 않습니다.");
         }
     }

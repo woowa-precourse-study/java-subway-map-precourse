@@ -24,11 +24,11 @@ public class SubwayController {
         this.inputView = new InputView();
         this.service = service;
         initCommands();
+        initSetting();
     }
 
     public void run() {
-
-        while(true) {
+        while (true) {
             String function = inputView.readMessage();
             if (function.equals("Q")) {
                 break;
@@ -64,9 +64,20 @@ public class SubwayController {
 
 
     public void stationManagement() {
-        String choice=inputView.readStationFunction();
+        String choice = inputView.readStationFunction();
         if (choice.equals("B")) {
             return;
+        }
+        if (choice.equals("1")) {
+            StationRepository.addStation(new Station(inputView.readAddStation()));
+        }
+
+        if (choice.equals("2")) {
+            StationRepository.deleteStation(inputView.readDeleteStation());
+        }
+
+        if (choice.equals("3")) {
+            OutputView.printStation(StationRepository.getStationInfo());
         }
 
     }

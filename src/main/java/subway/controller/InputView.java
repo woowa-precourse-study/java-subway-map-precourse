@@ -41,6 +41,23 @@ public class InputView {
         return input;
     }
 
+    public String readAddStation() {
+        System.out.println("## 등록할 역 이름을 입력하세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+        return input;
+    }
+
+    public String readDeleteStation() {
+        System.out.println("## 삭제할 역 이름을 입력하세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+        return input;
+    }
+
+
     private String readInput(List<Validator> validators) {
         try{
             String input = Console.readLine().trim();
