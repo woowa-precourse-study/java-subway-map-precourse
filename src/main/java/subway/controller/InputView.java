@@ -25,6 +25,22 @@ public class InputView {
         return input;
     }
 
+    public String readStationFunction() {
+        System.out.println("""
+                \n## 역 관리 화면
+                1. 역 등록
+                2. 역 삭제
+                3. 역 조회
+                B. 돌아가기
+                """);
+        System.out.println("\n## 원하는 기능을 선택하세요.");
+        String input = readInput(List.of(
+                Validator::validateNotBlank,
+                Validator::validateChoice
+        ));
+        return input;
+    }
+
     private String readInput(List<Validator> validators) {
         try{
             String input = Console.readLine().trim();
