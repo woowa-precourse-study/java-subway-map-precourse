@@ -81,7 +81,13 @@ public class SubwayController {
         }
 
         if (choice.equals("2")) {
-            StationRepository.deleteStation(inputView.readDeleteStation());
+            String name = inputView.readDeleteStation();
+            for (List<String> stations:sections.values()){
+                if (stations.contains(name)){
+                    throw new IllegalArgumentException("[ERROR] 노선에 등록된 역은 삭제할 수 없습니다.");
+                }
+            }
+            StationRepository.deleteStation(name);
         }
 
         if (choice.equals("3")) {
