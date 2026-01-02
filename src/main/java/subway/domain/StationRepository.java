@@ -36,7 +36,6 @@ public class StationRepository {
     }
 
 
-
     private static void validateUniqueStation(Station station) {
         if (stations.contains(station)) {
             throw new IllegalArgumentException("[ERROR] 이미 존재하는 역은 등록할 수 없습니다.");
@@ -50,5 +49,9 @@ public class StationRepository {
             }
         }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 역입니다.");
+    }
+
+    public static void clear() {
+        stations.clear();
     }
 }

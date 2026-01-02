@@ -3,12 +3,23 @@ package subway;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import subway.domain.LineRepository;
+import subway.domain.StationRepository;
 
 class ApplicationTest extends NsTest {
+
+    @BeforeEach
+    void setUp() {
+        StationRepository.clear();
+        LineRepository.clear();
+    }
+
+
     @Test
     void 역_조회_정상테스트() {
         assertSimpleTest(() -> {
@@ -75,21 +86,30 @@ class ApplicationTest extends NsTest {
      *
      * **/
 
+
     @Test
     void 노선에_등록된_역_삭제_줄가_예외_테스트() {
-        assertSimpleTest(() -> {
-            runException("1","2","매봉역");
-            assertThat(output()).contains("[ERROR]");
-        });
+        assertThatThrownBy(() ->
+                runException("1","2","매봉역")
+        ).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR]");
     }
 
 
     @Test
     void 역_이름_두글자이하_예외_테스트() {
-        assertSimpleTest(() -> {
-            runException("1","1","아");
-            assertThat(output()).contains("[ERROR]");
-        });
+        assertThatThrownBy(() ->
+                runException("1","1","아")
+        ).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR]");
+    }
+
+    @Test
+    void 역_중복등록__예외_테스트() {
+        assertThatThrownBy(() ->
+                runException("1","1","매봉역")
+        ).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR]");
     }
 
 

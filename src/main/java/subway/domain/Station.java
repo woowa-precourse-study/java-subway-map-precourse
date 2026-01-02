@@ -18,4 +18,17 @@ public class Station {
             throw new IllegalArgumentException("[ERROR] 지하철 역 이름은 2글자 이상이어야 합니다.");
         }
     }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if(!(o instanceof Station)) return false;
+        Station station = (Station) o;
+        return name.equals(station.name);
+    }
+
+    @Override
+    public int hashCode(){
+        return name.hashCode();
+    }
 }

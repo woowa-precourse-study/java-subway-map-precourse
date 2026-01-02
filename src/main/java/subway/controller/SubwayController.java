@@ -6,10 +6,7 @@ import subway.command.main.PrintRoute;
 import subway.command.main.LineManagement;
 import subway.command.main.SectionManagement;
 import subway.command.main.StationManagement;
-import subway.domain.Line;
-import subway.domain.LineRepository;
-import subway.domain.Station;
-import subway.domain.StationRepository;
+import subway.domain.*;
 import subway.service.SubwayService;
 
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ import java.util.Map;
 
 public class SubwayController {
     private Map<String, Command> commands = new HashMap<>();
-    private Map<String, List<String>> sections = new HashMap<>();
+    private Section section=new Section();
     private final InputView inputView;
     private final SubwayService service;
 
@@ -62,11 +59,9 @@ public class SubwayController {
         LineRepository.addLine(new Line("3호선"));
         LineRepository.addLine(new Line("신분당선"));
 
-
-        sections.put("2호선",List.of("교대역","강남역","역삼역"));
-        sections.put("3호선",List.of("교대역","남부터미널역","양재역","매봉역"));
-        sections.put("신분당선",List.of("강남역","양재역","양재시민의숲역"));
-
+        section.addSection("2호선",new ArrayList<>(List.of("교대역","강남역","역삼역")));
+        section.addSection("3호선",new ArrayList<>(List.of("교대역","남부터미널역","양재역","매봉역")));
+        section.addSection("신분당선",new ArrayList<>(List.of("강남역","양재역","양재시민의숲역")));
 
     }
 
@@ -83,11 +78,8 @@ public class SubwayController {
 
         if (choice.equals("2")) {
             String name = inputView.readDeleteStation();
-            for (List<String> stations:sections.values()){
-                if (stations.contains(name)){
-                    throw new IllegalArgumentException("[ERROR] 노선에 등록된 역은 삭제할 수 없습니다.");
-                }
-            }
+            section.deleteSectionStation(name);
+
             StationRepository.deleteStation(name);
         }
 
@@ -104,16 +96,15 @@ public class SubwayController {
         }
         if (choice.equals("1")) {
             String line = inputView.readAddLine();
-            if (sections.containsKey(line)){
-                throw new IllegalArgumentException("[ERROR] 이미 등록된 노선입니다.");
-            }
+            section.validateSection(line);
+
             String start = inputView.readStartStation();
             StationRepository.validateStation(start);
             String end = inputView.readEndStation();
             StationRepository.validateStation(end);
 
             LineRepository.addLine(new Line(line));
-            sections.put(line,List.of(start,end));
+            section.addSection(line,new ArrayList<>(List.of(start,end)));
             OutputView.printAddLineResult();
 
         }
@@ -134,17 +125,14 @@ public class SubwayController {
         }
         if (choice.equals("1")) {
             String line = inputView.readAddLine();
-            if (!sections.containsKey(line)){
-                throw new IllegalArgumentException("[ERROR] 해당 노선이 존재하지 않습니다.");
-            }
+            section.validateSectionExist(line);
+
             String station = inputView.readSectionAddStation();
             if (!StationRepository.isExistStation(station)){
                 StationRepository.addStation(new Station(station));
             }
             int order = inputView.readOrder();
-            List<String> newSection = new ArrayList<>(); // TODO 이거 정리
-            newSection.addAll(sections.get(line));
-            newSection.add(order,station);
+            section.addSectionStation(line, order, station);
             OutputView.printSectionResult();
 
         }
@@ -152,22 +140,13 @@ public class SubwayController {
         if (choice.equals("2")) {
 
             String line=inputView.readSectionDeleteLine();
-            if (!sections.containsKey(line)){
-                throw new IllegalArgumentException("[ERROR] 해당 노선이 존재하지 않습니다.");
-            }
+            section.validateSectionExist(line);
 
             String station=inputView.readSectionDeleteStation();
             StationRepository.validateStation(station);
 
-
-            if (sections.get(line).size()<=2){
-                throw new IllegalArgumentException("[ERROR] 노선에 포함된 역이 두개 이하일 때는 역을 제거할 수 없습니다.");
-            }
-
-            List<String> newSection2 = new ArrayList<>(); // TODO 이거 정리
-            newSection2.addAll(sections.get(line));
-            int idx=newSection2.indexOf(station);
-            newSection2.remove(idx);
+            section.deleteSectionStation(station);
+            StationRepository.deleteStation(station);
             OutputView.printSectionDelete();
 
         }
@@ -175,10 +154,8 @@ public class SubwayController {
     }
 
 
-
-
     public void printRoute() {
-        OutputView.printRoute(sections);
+        OutputView.printRoute(section.getSections());
     }
 
     public void quit() {

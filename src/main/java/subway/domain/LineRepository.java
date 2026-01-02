@@ -39,4 +39,8 @@ public class LineRepository {
         }
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 노선은 삭제할 수 없습니다.");
     }
+
+    public static void clear() {
+        lines.clear();
+    }
 }
