@@ -39,11 +39,11 @@ public class SubwayController {
     }
 
     private void initCommands() {
-        commands.put("1", new StationManagement(this));
-        commands.put("2", new LineManagement(this));
-        commands.put("3", new SectionManagement(this));
-        commands.put("4", new PrintRoute(this));
-        commands.put("Q", new Quit(this));
+        commands.put("1", new StationManagement(inputView,section));
+        commands.put("2", new LineManagement(inputView,section));
+        commands.put("3", new SectionManagement(inputView,section));
+        commands.put("4", new PrintRoute(inputView,section));
+        commands.put("Q", new Quit());
     }
 
     private void initSetting() {
@@ -65,100 +65,4 @@ public class SubwayController {
 
     }
 
-
-    public void stationManagement() {
-        String choice = inputView.readStationFunction();
-        if (choice.equals("B")) {
-            return;
-        }
-        if (choice.equals("1")) {
-            StationRepository.addStation(new Station(inputView.readAddStation()));
-
-        }
-
-        if (choice.equals("2")) {
-            String name = inputView.readDeleteStation();
-            section.deleteSectionStation(name);
-
-            StationRepository.deleteStation(name);
-        }
-
-        if (choice.equals("3")) {
-            OutputView.printStationInfo(StationRepository.getStationInfo());
-        }
-
-    }
-
-    public void lineMangement() {
-        String choice = inputView.readLineFunction();
-        if (choice.equals("B")) {
-            return;
-        }
-        if (choice.equals("1")) {
-            String line = inputView.readAddLine();
-            section.validateSection(line);
-
-            String start = inputView.readStartStation();
-            StationRepository.validateStation(start);
-            String end = inputView.readEndStation();
-            StationRepository.validateStation(end);
-
-            LineRepository.addLine(new Line(line));
-            section.addSection(line,new ArrayList<>(List.of(start,end)));
-            OutputView.printAddLineResult();
-
-        }
-
-        if (choice.equals("2")) {
-            LineRepository.deleteLineByName(inputView.readDeleteLine());
-        }
-
-        if (choice.equals("3")) {
-            OutputView.printLineInfo(LineRepository.getLinesInfo());
-        }
-    }
-
-    public void sectionManagement() {
-        String choice = inputView.readSectionFunction();
-        if (choice.equals("B")) {
-            return;
-        }
-        if (choice.equals("1")) {
-            String line = inputView.readAddLine();
-            section.validateSectionExist(line);
-
-            String station = inputView.readSectionAddStation();
-            if (!StationRepository.isExistStation(station)){
-                StationRepository.addStation(new Station(station));
-            }
-            int order = inputView.readOrder();
-            section.addSectionStation(line, order, station);
-            OutputView.printSectionResult();
-
-        }
-
-        if (choice.equals("2")) {
-
-            String line=inputView.readSectionDeleteLine();
-            section.validateSectionExist(line);
-
-            String station=inputView.readSectionDeleteStation();
-            StationRepository.validateStation(station);
-
-            section.deleteSectionStation(station);
-            StationRepository.deleteStation(station);
-            OutputView.printSectionDelete();
-
-        }
-
-    }
-
-
-    public void printRoute() {
-        OutputView.printRoute(section.getSections());
-    }
-
-    public void quit() {
-        return;
-    }
 }

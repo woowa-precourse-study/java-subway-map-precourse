@@ -12,7 +12,7 @@ public class Section {
         sections.put(line,stations);
     }
 
-    public  void deleteSectionStation(String name){
+    public  void validateNotStationInLine(String name){
         for (List<String> stations:sections.values()){
             if (stations.contains(name)){
                 throw new IllegalArgumentException("[ERROR] 노선에 등록된 역은 삭제할 수 없습니다.");
@@ -26,8 +26,11 @@ public class Section {
 
 
     public void deleteSectionStation(String line, String station) {
-        int idx=sections.get(line).indexOf(station);
-        sections.get(line).remove(idx);
+        validateSectionMinimum(line);
+        boolean removed = sections.get(line).remove(station);
+        if (!removed) {
+            throw new IllegalArgumentException("[ERROR] 해당 역이 노선에 존재하지 않습니다.");
+        }
     }
 
     public Map<String, List<String>> getSections() {

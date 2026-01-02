@@ -22,7 +22,7 @@ public class LineRepository {
     }
 
     public static List<Line> getLinesInfo() {
-        return lines;
+        return Collections.unmodifiableList(lines);
     }
 
     private static void validateUniqueLine(Line line) {

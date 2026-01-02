@@ -1,16 +1,15 @@
 package subway.command;
 
-import subway.controller.SubwayController;
-
 public class Quit implements Command {
-    private final SubwayController controller;
-
-    public Quit(SubwayController controller) {
-        this.controller = controller;
+    public Quit() {
     }
 
     @Override
     public void execute() {
-        controller.quit();
+        quit();
+    }
+
+    public void quit() {
+        return;
     }
 }
