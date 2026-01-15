@@ -3,7 +3,6 @@ package subway.command.main;
 import subway.command.Command;
 import subway.controller.InputView;
 import subway.controller.OutputView;
-import subway.controller.SubwayController;
 import subway.domain.Line;
 import subway.domain.LineRepository;
 import subway.domain.Section;
@@ -12,11 +11,11 @@ import subway.domain.StationRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LineManagement implements Command {
+public class Two implements Command {
     private final InputView inputView;
     private Section section;
 
-    public LineManagement(InputView inputView, Section section) {
+    public Two(InputView inputView, Section section) {
         this.inputView=inputView;
         this.section = section;
     }

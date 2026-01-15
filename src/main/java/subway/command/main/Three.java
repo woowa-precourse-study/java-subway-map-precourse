@@ -3,17 +3,16 @@ package subway.command.main;
 import subway.command.Command;
 import subway.controller.InputView;
 import subway.controller.OutputView;
-import subway.controller.SubwayController;
 import subway.domain.Section;
 import subway.domain.Station;
 import subway.domain.StationRepository;
 
-public class SectionManagement implements Command {
+public class Three implements Command {
     private final InputView inputView;
     private Section section;
 
 
-    public SectionManagement(InputView inputView, Section section) {
+    public Three(InputView inputView, Section section) {
         this.inputView=inputView;
         this.section = section;
     }

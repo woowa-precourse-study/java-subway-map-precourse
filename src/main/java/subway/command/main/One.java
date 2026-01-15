@@ -2,25 +2,23 @@ package subway.command.main;
 
 import subway.command.Command;
 import subway.controller.InputView;
-import subway.controller.OutputView;
-import subway.controller.SubwayController;
 import subway.domain.Section;
 
-public class PrintRoute implements Command {
+public class One implements Command {
     private final InputView inputView;
     private Section section;
 
-
-    public PrintRoute(InputView inputView, Section section) {
+    public One(InputView inputView, Section section) {
         this.inputView=inputView;
         this.section = section;
     }
 
     @Override
     public void execute() {
-        printRoute();
+        one();
     }
-    public void printRoute() {
-        OutputView.printRoute(section.getSections());
+
+    public void one() {
+        // TODO: 작동할거 작성
     }
 }

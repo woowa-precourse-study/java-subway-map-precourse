@@ -2,10 +2,10 @@ package subway.controller;
 
 import subway.command.Command;
 import subway.command.Quit;
-import subway.command.main.PrintRoute;
-import subway.command.main.LineManagement;
-import subway.command.main.SectionManagement;
-import subway.command.main.StationManagement;
+import subway.command.main.Four;
+import subway.command.main.Two;
+import subway.command.main.Three;
+import subway.command.main.One;
 import subway.domain.*;
 import subway.service.SubwayService;
 
@@ -39,10 +39,10 @@ public class SubwayController {
     }
 
     private void initCommands() {
-        commands.put("1", new StationManagement(inputView,section));
-        commands.put("2", new LineManagement(inputView,section));
-        commands.put("3", new SectionManagement(inputView,section));
-        commands.put("4", new PrintRoute(inputView,section));
+        commands.put("1", new One(inputView,section));
+        commands.put("2", new Two(inputView,section));
+        commands.put("3", new Three(inputView,section));
+        commands.put("4", new Four(inputView,section));
         commands.put("Q", new Quit());
     }
 
